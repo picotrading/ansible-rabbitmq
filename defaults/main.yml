@@ -1,0 +1,8 @@
+---
+rabbitmq_host: localhost
+rabbitmq_password: pass
+rabbitmq_ssl_port: 5672
+rabbitmq_ssl_dir: /etc/rabbitmq/ssl/
+rabbitmq_user: sensu
+
+yum_repo_dir: /etc/yum.repos.d/

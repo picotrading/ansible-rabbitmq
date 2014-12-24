@@ -1,0 +1,4 @@
+[epel]
+baseurl=http://download.fedoraproject.org/pub/epel/6/$basearch
+gpgcheck=0
+name=Extra Packages for Enterprise Linux 6 - $basearch
