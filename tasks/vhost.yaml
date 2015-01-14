@@ -1,0 +1,29 @@
+---
+
+- name: Remove guest user
+  rabbitmq_user:
+    user=guest
+    vhost=/
+    state=absent
+  when: remove_guest_user
+
+- name: Add rabbitmq vhost
+  rabbitmq_vhost:
+    name={{ item.name }}
+    state=present
+  with_items:
+    rabbitmq_vhost_definitions
+
+- name: Add rabbitmq users
+  rabbitmq_user:
+    user={{ item.user }}
+    password={{ item.password }}
+    vhost={{ item.vhost | default('/', false) }}
+    tags={{ (item.tags | default('')) | join(',') }}
+    configure_priv={{ item.configure_priv | default('.*') }}
+    read_priv={{ item.read_priv | default('.*') }}
+    write_priv={{ item.write_priv | default('.*') }}
+    state=present
+    force={{ item.force | default('no') }}
+  with_items:
+    rabbitmq_users_definitions 

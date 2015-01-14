@@ -1,42 +1,7 @@
-Rabbitmq
-=======
-
-Role to install Rabbitmq via yum.  Depends on erlang.
-
-Example
--------
-
-```
 ---
 
-- hosts: myhost
-  roles:
-    - role: rabbitmq
-      rabbitmq_user: foo
-      rabbitmq_group: bar
-    - rabbitmq_vhost_definitions:
-      - name: '/myvhost'
-    - rabbitmq_user_definitions:
-      - user: foo
-        password: bar
-        vhost: '/myvhost'
-        tags:
-        - one
-        - two
-        configure_priv: '.*'
-        read_priv: '.*'
-        write_priv: '.*'
-        force: yes
-```
-
-Role variables
---------------
-
-List of variables used by the role:
-
-```
 # Packages
-# Could set rabbitmq_release to 'current'
+# Could also set release to 'current'
 rabbitmq_release: v3.1.5
 rabbitmq_rpm_release: "{{ rabbitmq_release }}-1"
 rabbitmq_signing_key_location: http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
@@ -60,16 +25,18 @@ rabbitmq_ssl         : true
 rabbitmq_conf_tcp_listeners_address: ''
 rabbitmq_conf_tcp_listeners_port   : 5672
 
+# Guest user exists by default
+remove_guest_user : false
+
 # VHOST
-rabbitmq_vhost_definitions:
-#example
+rabbitmq_vhost_definitions: []
+# example
 #- name: '/sensu'
-rabbitmq_users_definitions:
-#example
-#rabbitmq_users_definitions:
+rabbitmq_users_definitions: []
+# example
 # - user: foo
 # password: bar
-# vhost: '/sensu'
+# vhost: '/'
 # tags:
 # - one
 # - two
@@ -89,20 +56,6 @@ rabbitmq_ssl_path                    : "{{ rabbitmq_conf_path }}/ssl"
 rabbitmq_conf_ssl_listeners_address  : '0.0.0.0'
 rabbitmq_conf_ssl_listeners_port     : 5671
 rabbitmq_conf_ssl_options_cacertfile : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_cacert }}"
-rabbitmq_conf_ssl_options_servercert : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}"
+rabbitmq_conf_ssl_options_servercert : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}" 
 rabbitmq_conf_ssl_options_keyfile    : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_key }}"
 rabbitmq_conf_ssl_options_fail_if_no_peer_cert: "true"
-```
-
-
-License
--------
-
-MIT
-
-
-Author
-------
-
-Robert Readman
-
