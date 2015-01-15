@@ -17,20 +17,20 @@
 
 - name: Make SSL dir
   file:
-   path={{ rabbitmq_ssl_path }}
-   owner={{ rabbitmq_user }}
-   group={{ rabbitmq_group }}
-   mode=0750
-   state=directory
+   path: {{ rabbitmq_ssl_path }}
+   owner: {{ rabbitmq_user }}
+   group: {{ rabbitmq_group }}
+   mode: 0750
+   state: directory
 
 - name: copy pem files to host
   copy: 
-   src={{ item }}
-   dest={{ rabbitmq_ssl_path }}/{{ item }}
-   owner={{ rabbitmq_user }}
-   group={{ rabbitmq_group }}
-   mode=0640
-   backup=yes
+   src: {{ item }}
+   dest: {{ rabbitmq_ssl_path }}/{{ item }}
+   owner: {{ rabbitmq_user }}
+   group: {{ rabbitmq_group }}
+   mode: 0640
+   backup: yes
   with_items:
    - "{{ rabbitmq_cacert }}"
    - "{{ rabbitmq_server_cert }}"
@@ -40,12 +40,12 @@
 
 - name: setup rabbitmq.config for /etc/rabbitmq/
   template: 
-   src=rabbitmq.conf.j2 
-   dest={{ rabbitmq_conf_path }}/rabbitmq.config
-   owner={{ rabbitmq_user }}
-   group={{ rabbitmq_group }}
-   mode=0640
-   backup=yes
+   src: rabbitmq.conf.j2 
+   dest: {{ rabbitmq_conf_path }}/rabbitmq.config
+   owner: {{ rabbitmq_user }}
+   group: {{ rabbitmq_group }}
+   mode: 0640
+   backup: yes
 
 - name: start Rabbitmq
   service: name=rabbitmq-server state=started enabled=true
