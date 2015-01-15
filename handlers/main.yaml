@@ -2,7 +2,11 @@
 
 # handlers file for rabbitmq
 - name: reload rabbitmq-server
-  service: name=rabbitmq-server state=reloaded
+  service:
+    name: rabbitmq-server 
+    state: reloaded
 
 - name: restart rabbitmq-server
-  service: name=rabbitmq-server state=restarted
+  service:
+    name: rabbitmq-server
+    state: restarted

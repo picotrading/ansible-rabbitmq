@@ -5,10 +5,10 @@
 rabbitmq_release: v3.1.5
 rabbitmq_rpm_release: "{{ rabbitmq_release }}-1"
 rabbitmq_signing_key_location: http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-rabbitmq_rpm_location        : http://www.rabbitmq.com/releases/rabbitmq-server/{{ rabbitmq_release }}/rabbitmq-server-{{ rabbitmq_rpm_release }}.noarch.rpm
+rabbitmq_rpm_location: http://www.rabbitmq.com/releases/rabbitmq-server/{{ rabbitmq_release }}/rabbitmq-server-{{ rabbitmq_rpm_release }}.noarch.rpm
 
 # Owner
-rabbitmq_user : rabbitmq
+rabbitmq_user: rabbitmq
 rabbitmq_group: rabbitmq
 
 # Plugins
@@ -16,17 +16,17 @@ rabbitmq_plugins: rabbitmq_management
 rabbitmq_new_only: 'no'
 
 # Default ssl certs
-rabbitmq_cacert      : "cacert.pem"
-rabbitmq_server_cert : "servercert.pem"
-rabbitmq_server_key  : "serverkey.pem"
-rabbitmq_ssl         : true
+rabbitmq_cacert: cacert.pem
+rabbitmq_server_cert: servercert.pem
+rabbitmq_server_key: serverkey.pem
+rabbitmq_ssl: true
 
 # rabbitmq TCP configuration
 rabbitmq_conf_tcp_listeners_address: ''
-rabbitmq_conf_tcp_listeners_port   : 5672
+rabbitmq_conf_tcp_listeners_port: 5672
 
 # Guest user exists by default
-remove_guest_user : false
+remove_guest_user: false
 
 # VHOST
 rabbitmq_vhost_definitions: []
@@ -52,10 +52,10 @@ rabbitmq_conf_path: /etc/rabbitmq
 rabbitmq_ssl_self_signed_cert: false
 
 # rabbitmq SSL configuration
-rabbitmq_ssl_path                    : "{{ rabbitmq_conf_path }}/ssl"
-rabbitmq_conf_ssl_listeners_address  : '0.0.0.0'
-rabbitmq_conf_ssl_listeners_port     : 5671
-rabbitmq_conf_ssl_options_cacertfile : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_cacert }}"
-rabbitmq_conf_ssl_options_servercert : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}" 
-rabbitmq_conf_ssl_options_keyfile    : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_key }}"
+rabbitmq_ssl_path: "{{ rabbitmq_conf_path }}/ssl"
+rabbitmq_conf_ssl_listeners_address: '0.0.0.0'
+rabbitmq_conf_ssl_listeners_port: 5671
+rabbitmq_conf_ssl_options_cacertfile: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_cacert }}"
+rabbitmq_conf_ssl_options_servercert: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}" 
+rabbitmq_conf_ssl_options_keyfile: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_key }}"
 rabbitmq_conf_ssl_options_fail_if_no_peer_cert: "true"
