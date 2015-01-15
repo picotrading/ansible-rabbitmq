@@ -2,11 +2,13 @@
 
 - name: Test if distribution is RedHat
   assert:
-    that: ansible_os_family == "RedHat"
+    that: ansible_os_family == "RedHat" and
+          ansible_distribution_major_version | int >= 6
 
 - name: Install erlang and Rabbitmq
-  yum: name={{ item }}
-  state=present
+  yum:
+    name: {{ item }}
+    state: present
   with_items:
    - erlang
    - rabbitmq-server
@@ -49,7 +51,10 @@
     backup: yes
 
 - name: Start Rabbitmq
-  service: name=rabbitmq-server state=started enabled=true
+  service:
+    name: rabbitmq-server
+    state: started
+    enabled: true
 
 - name: Add sensu vhost
   include: vhost.yaml
