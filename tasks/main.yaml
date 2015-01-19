@@ -7,7 +7,7 @@
 
 - name: Install erlang and Rabbitmq
   yum:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   with_items:
    - erlang
