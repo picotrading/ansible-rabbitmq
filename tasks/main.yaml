@@ -5,18 +5,25 @@
     that: ansible_os_family == "RedHat" and
           ansible_distribution_major_version | int >= 6
 
-- name: Install erlang and Rabbitmq
+- name: Install Erlang from rpm
   yum:
-    name: "{{ item }}"
+    name: "{{ epel_rpm_url }}"
     state: present
-  with_items:
-   - erlang
-   - rabbitmq-server
 
-# The better way to do this does not work yet
-- name: Enable rabbitmq console
-  command: 
-    /usr/lib/rabbitmq/lib/rabbitmq_server-3.1.5/sbin/rabbitmq-plugins enable rabbitmq_management
+- name: Import Rabbitmq signing key from url
+  rpm_key:
+    key: "{{ rabbitmq_signing_key_url }}"
+    state: present
+
+- name: Install Rabbitmq from rpm
+  yum:
+    name: "{{ rabbitmq_rpm_url }}"
+    state: present
+
+- name: Enable rabbitmq plugins
+  rabbitmq_plugin:
+    names: "{{ rabbitmq_plugins }}"
+    state: enabled
 
 - name: Make SSL dir
   file:
