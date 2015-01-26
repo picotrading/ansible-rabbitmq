@@ -1,12 +1,14 @@
 ---
 
-# Packages
+# Erlang repos
+epel_arch: x86_64
 epel_release: epel-release-6-8
-epel_rpm_url: "http://dl.fedoraproject.org/pub/epel/6/x86_64/{{ epel_release }}.noarch.rpm"
+epel_rpm_url: "http://dl.fedoraproject.org/pub/epel/6/{{ epel_arch }}/{{ epel_release }}.noarch.rpm"
+
+# Packages
 rabbitmq_release: rabbitmq-server-3.4.3
-rabbitmq_rpm_release: "{{ rabbitmq_release }}-1"
 rabbitmq_signing_key_url: "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
-rabbitmq_rpm_url: "http://www.rabbitmq.com/releases/rabbitmq-server/current/{{ rabbitmq_rpm_release }}.noarch.rpm"
+rabbitmq_rpm_url: "http://www.rabbitmq.com/releases/rabbitmq-server/current/{{ rabbitmq_release }}-1.noarch.rpm"
 
 # Owner
 rabbitmq_user: rabbitmq

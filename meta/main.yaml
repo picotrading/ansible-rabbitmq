@@ -11,10 +11,4 @@ galaxy_info:
        - 6
   categories:
     - Monitoring, Messaging
-dependencies:
-  - role: yumrepo
-    yumrepo_repos:
-      epel:
-        name: epel
-        baseurl: http://download.fedoraproject.org/pub/epel/6/$basearch
-        gpgcheck: 0
+dependencies: []
