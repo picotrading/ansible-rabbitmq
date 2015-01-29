@@ -27,6 +27,8 @@ rabbitmq_ssl: true
 # rabbitmq TCP configuration
 rabbitmq_conf_tcp_listeners_address: ''
 rabbitmq_conf_tcp_listeners_port: 5672
+# Disables SSLv3, see https://www.rabbitmq.com/ssl.html#enabling-ssl
+rabbitmq_conf_allow_poodle_attack: "false"
 
 # Guest user exists by default
 remove_guest_user: false

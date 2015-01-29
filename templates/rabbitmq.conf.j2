@@ -5,6 +5,7 @@
     {% endif %}
     {% if rabbitmq_ssl -%}
 {ssl_listeners, [{{ rabbitmq_conf_ssl_listeners_port }}]},
+{ssl_allow_poodle_attack, {{ allow_poodle_attack}} },
   {ssl_options, [
     {cacertfile, "{{rabbitmq_conf_ssl_options_cacertfile}}"},
     {certfile, "{{rabbitmq_conf_ssl_options_servercert}}"},
