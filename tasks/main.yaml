@@ -5,48 +5,15 @@
     that: ansible_os_family == "RedHat" and
           ansible_distribution_major_version | int >= 6
 
-- name: Install Erlang from rpm
+- name: Install Rabbitmq 
   yum:
-    name: "{{ epel_rpm_url }}"
-    state: present
-
-- name: Import Rabbitmq signing key from url
-  rpm_key:
-    key: "{{ rabbitmq_signing_key_url }}"
-    state: present
-
-- name: Install Rabbitmq from rpm
-  yum:
-    name: "{{ rabbitmq_rpm_url }}"
+    name: rabbitmq-server
     state: present
 
 - name: Enable rabbitmq plugins
   rabbitmq_plugin:
     names: "{{ rabbitmq_plugins }}"
     state: enabled
-
-- name: Make SSL dir
-  file:
-    path: "{{ rabbitmq_ssl_path }}"
-    owner: "{{ rabbitmq_user }}"
-    group: "{{ rabbitmq_group }}"
-    mode: 0750
-    state: directory
-
-- name: Copy pem files to host
-  copy: 
-    src: "{{ item }}"
-    dest: "{{ rabbitmq_ssl_path }}/{{ item }}"
-    owner: "{{ rabbitmq_user }}"
-    group: "{{ rabbitmq_group }}"
-    mode: 0640
-    backup: yes
-  with_items:
-   - "{{ rabbitmq_cacert }}"
-   - "{{ rabbitmq_server_cert }}"
-   - "{{ rabbitmq_server_key }}"
-  notify: reload rabbitmq-server
-  when: rabbitmq_ssl_self_signed_cert == false
 
 - name: Setup rabbitmq.config for /etc/rabbitmq/
   template: 
@@ -56,6 +23,8 @@
     group: "{{ rabbitmq_group }}"
     mode: 0640
     backup: yes
+  notify:
+    reload_rabbitmq_server
 
 - name: Start Rabbitmq
   service:

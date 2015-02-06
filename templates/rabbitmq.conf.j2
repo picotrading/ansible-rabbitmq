@@ -1,9 +1,9 @@
 [
-  {rabbit, [
+  {rabbit, [ 
     {% if rabbitmq_conf_tcp_listeners_address != '' %}
     {tcp_listeners, [{"{{ rabbitmq_conf_tcp_listeners_address }}", {{ rabbitmq_conf_tcp_listeners_port }}}]}
     {% endif %}
-    {% if rabbitmq_ssl -%}
+    {#- {% if rabbitmq_ssl -%}
 {ssl_listeners, [{{ rabbitmq_conf_ssl_listeners_port }}]},
 {ssl_allow_poodle_attack, {{ rabbitmq_conf_allow_poodle_attack}} },
   {ssl_options, [
@@ -13,5 +13,5 @@
     {verify, verify_peer},
     {fail_if_no_peer_cert, true}]}
     {% endif %}
-  ]}
+-#}  ]}
 ].

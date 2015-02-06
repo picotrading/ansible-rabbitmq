@@ -1,14 +1,8 @@
 ---
 
-# Erlang repos
-epel_arch: x86_64
-epel_release: epel-release-6-8
-epel_rpm_url: "http://dl.fedoraproject.org/pub/epel/6/{{ epel_arch }}/{{ epel_release }}.noarch.rpm"
-
 # Packages
 rabbitmq_release: rabbitmq-server-3.4.3
-rabbitmq_signing_key_url: "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
-rabbitmq_rpm_url: "http://www.rabbitmq.com/releases/rabbitmq-server/current/{{ rabbitmq_release }}-1.noarch.rpm"
+rabbitmq_repo: "http://www.rabbitmq.com/releases/rabbitmq-server/current/{{ rabbitmq_release }}-1.noarch.rpm"
 
 # Owner
 rabbitmq_user: rabbitmq
@@ -25,8 +19,8 @@ rabbitmq_server_key: serverkey.pem
 rabbitmq_ssl: true
 
 # rabbitmq TCP configuration
-rabbitmq_conf_tcp_listeners_address: ''
-rabbitmq_conf_tcp_listeners_port: 5672
+rabbitmq_conf_tcp_listeners_address: 0.0.0.0
+rabbitmq_conf_tcp_listeners_port: 5671
 # Disables SSLv3, see https://www.rabbitmq.com/ssl.html#enabling-ssl
 rabbitmq_conf_allow_poodle_attack: "false"
 
