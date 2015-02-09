@@ -13,8 +13,4 @@ galaxy_info:
     - Monitoring, Messaging
 dependencies:
   - role: yumrepo
-    yumrepo_repos:
-      rabbitmq-server:
-        name: rabbitmq-server
-        baseurl: "{{ rabbitmq_repo }}"
-        gpgcheck: 0
+    yumrepo_repos: "{{ rabbitmq_yumrepo_repos }}"

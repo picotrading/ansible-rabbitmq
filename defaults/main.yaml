@@ -1,8 +1,13 @@
 ---
 
 # Packages
-rabbitmq_release: rabbitmq-server-3.4.3
-rabbitmq_repo: "http://www.rabbitmq.com/releases/rabbitmq-server/current/{{ rabbitmq_release }}-1.noarch.rpm"
+rabbitmq_repo_url: http://www.rabbitmq.com/releases/rabbitmq-server/v3.4.3/
+#rabbitmq_repo_url: "http://{{ pulp_server }}/pulp/repos/external/centos/6/x86_64/rabbitmq/2015Q1/"
+rabbitmq_yumrepo_repos:
+  rabbitmq-server:
+    name: rabbitmq-server
+    baseurl: "{{ rabbitmq_repo_url }}"
+    gpgcheck: 0
 
 # Owner
 rabbitmq_user: rabbitmq

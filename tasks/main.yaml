@@ -5,10 +5,13 @@
     that: ansible_os_family == "RedHat" and
           ansible_distribution_major_version | int >= 6
 
+- name: DEBUG install
+  debug: msg="Rabbitmq repo {{ rabbitmq_repo_url }}"
+
 - name: Install Rabbitmq 
   yum:
     name: rabbitmq-server
-    state: present
+    state: latest
 
 - name: Enable rabbitmq plugins
   rabbitmq_plugin:
