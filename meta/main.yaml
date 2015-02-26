@@ -2,15 +2,15 @@
 
 galaxy_info:
   author: Robert Readman
-  description: A role that installs Rabbitmq
+  description: A role that installs RabbitMQ
   license: MIT
-  min_ansible_version: 1.9
+  min_ansible_version: 1.8
   platforms:
     - name: EL
       versions:
-       - 6
+        - 6
   categories:
-    - Monitoring, Messaging
+    - monitoring
+    - networking
 dependencies:
-  - role: yumrepo
-    yumrepo_repos: "{{ rabbitmq_yumrepo_repos }}"
+  - yumrepo

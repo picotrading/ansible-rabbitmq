@@ -1,7 +1,17 @@
-Rabbitmq
-=======
+rabbitmq
+========
 
-Role to install Rabbitmq via yum.  Depends on erlang.
+Ansible Role which installs RabbitMQ from RPM package and configures it with the
+YAML format of the config file.
+
+The configuraton of the role is done in such way that it should not be necessary
+to change the role for any kind of configuration. All can be done either by
+changing role parameters or by declaring completely new configuration as a
+variable. That makes this role absolutely universal. See the examples below for
+more details.
+
+Please report any issues or send PR.
+
 
 Example
 -------
@@ -9,25 +19,39 @@ Example
 ```
 ---
 
-- hosts: myhost
+- hosts: myhost1
+  roles:
+    - rabbitmq
+
+# Example of how to create custom configuration
+- hosts: myhost1
   roles:
     - role: rabbitmq
-      rabbitmq_user: foo
-      rabbitmq_group: bar
-    - rabbitmq_vhost_definitions:
-      - name: '/myvhost'
-    - rabbitmq_user_definitions:
-      - user: foo
-        password: bar
-        vhost: '/myvhost'
-        tags:
-        - one
-        - two
-        configure_priv: '.*'
-        read_priv: '.*'
-        write_priv: '.*'
-        force: yes
+      # Here goes the custom configuration
+      rabbitmq_config:
+        rabbit:
+          tcp_listeners:
+            - 0.0.0.0: 5672
+          ssl_listeners:
+            - 5671
+          ssl_options:
+            - cacertfile: /path/to/testca/cacert.pem
+            - certfile: /path/to/server/cert.pem
+            - keyfile: /path/to/server/key.pem
+            - verify: verify_peer
+            - fail_if_no_peer_cert: true
 ```
+
+This role requires [Jinja2 Encoder
+Macros](https://github.com/picotrading/jinja2-encoder-macros) which must be
+placed into the same directory as the playbook:
+
+```
+$ ls -1 *.yaml
+site.yaml
+$ git clone https://github.com/picotrading/jinja2-encoder-macros.git ./templates/encoder
+```
+
 
 Role variables
 --------------
@@ -35,64 +59,25 @@ Role variables
 List of variables used by the role:
 
 ```
-# Packages
-# Could set rabbitmq_release to 'current'
-rabbitmq_release: v3.1.5
-rabbitmq_rpm_release: "{{ rabbitmq_release }}-1"
-rabbitmq_signing_key_location: http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-rabbitmq_rpm_location        : http://www.rabbitmq.com/releases/rabbitmq-server/{{ rabbitmq_release }}/rabbitmq-server-{{ rabbitmq_rpm_release }}.noarch.rpm
+# YUM repo URL
+rabbitmq_yum_repo_url: http://www.rabbitmq.com/releases/rabbitmq-server/current/
 
-# Owner
-rabbitmq_user : rabbitmq
-rabbitmq_group: rabbitmq
+# Package to install (you can force certain version here)
+rabbitmq_pkg: rabbitmq-server
 
-# Plugins
-rabbitmq_plugins: rabbitmq_management
-rabbitmq_new_only: 'no'
-
-# Default ssl certs
-rabbitmq_cacert      : "cacert.pem"
-rabbitmq_server_cert : "servercert.pem"
-rabbitmq_server_key  : "serverkey.pem"
-rabbitmq_ssl         : true
-
-# rabbitmq TCP configuration
-rabbitmq_conf_tcp_listeners_address: ''
-rabbitmq_conf_tcp_listeners_port   : 5672
-
-# VHOST
-rabbitmq_vhost_definitions:
-#example
-#- name: '/sensu'
-rabbitmq_users_definitions:
-#example
-#rabbitmq_users_definitions:
-# - user: foo
-# password: bar
-# vhost: '/sensu'
-# tags:
-# - one
-# - two
-# configure_priv: '.*'
-# read_priv: '.*'
-# write_priv: '.*'
-# force: yes
-
-# rabbitmq path
-rabbitmq_conf_path: /etc/rabbitmq
-
-# Generate self signed cert
-rabbitmq_ssl_self_signed_cert: false
-
-# rabbitmq SSL configuration
-rabbitmq_ssl_path                    : "{{ rabbitmq_conf_path }}/ssl"
-rabbitmq_conf_ssl_listeners_address  : '0.0.0.0'
-rabbitmq_conf_ssl_listeners_port     : 5671
-rabbitmq_conf_ssl_options_cacertfile : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_cacert }}"
-rabbitmq_conf_ssl_options_servercert : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}"
-rabbitmq_conf_ssl_options_keyfile    : "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_key }}"
-rabbitmq_conf_ssl_options_fail_if_no_peer_cert: "true"
+# RabbitMQ config
+rabbitmq_config:
+  - rabbit:
+    - tcp_listeners:
+      - '"127.0.0.1'": 5671
 ```
+
+
+Dependencies
+------------
+
+* [`yumrepo`](https://github.com/picotrading/ansible-yumrepo) role
+* [Jinja2 Encoder Macros](https://github.com/picotrading/jinja2-encoder-macros)
 
 
 License
@@ -101,8 +86,7 @@ License
 MIT
 
 
-Author
-------
+Authors
+-------
 
-Robert Readman
-
+Robert Readman, Jiri Tyr

@@ -2,35 +2,22 @@
 
 - name: Test if distribution is RedHat
   assert:
-    that: ansible_os_family == "RedHat" and
-          ansible_distribution_major_version | int >= 6
+    that: >
+      ansible_os_family == "RedHat" and
+      ansible_distribution_major_version | int >= 6
 
-- name: Install Rabbitmq 
+- name: Install rabbitmq-server
   yum:
-    name: rabbitmq-server
-    state: latest
+    name: "{{ rabbitmq_pkg }}"
 
-- name: Enable rabbitmq plugins
-  rabbitmq_plugin:
-    names: "{{ rabbitmq_plugins }}"
-    state: enabled
+- name: Setup RabbitMQ config
+  template:
+    src: rabbitmq.conf.j2
+    dest: /etc/rabbitmq/rabbitmq.config
+  notify: Restart rabbitmq-server
 
-- name: Setup rabbitmq.config for /etc/rabbitmq/
-  template: 
-    src: rabbitmq.conf.j2 
-    dest: "{{ rabbitmq_conf_path }}/rabbitmq.config"
-    owner: "{{ rabbitmq_user }}"
-    group: "{{ rabbitmq_group }}"
-    mode: 0640
-    backup: yes
-  notify:
-    reload_rabbitmq_server
-
-- name: Start Rabbitmq
+- name: Make sure rabbitmq-server is enabled and running
   service:
     name: rabbitmq-server
     state: started
     enabled: true
-
-- name: Add sensu vhost
-  include: vhost.yaml

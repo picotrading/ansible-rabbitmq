@@ -1,64 +1,13 @@
 ---
 
-# Packages
-rabbitmq_repo_url: http://www.rabbitmq.com/releases/rabbitmq-server/v3.4.3/
-rabbitmq_yumrepo_repos:
-  rabbitmq-server:
-    name: rabbitmq-server
-    baseurl: "{{ rabbitmq_repo_url }}"
-    gpgcheck: 0
+# YUM repo URL
+rabbitmq_yum_repo_url: http://www.rabbitmq.com/releases/rabbitmq-server/current/
 
-# Owner
-rabbitmq_user: rabbitmq
-rabbitmq_group: rabbitmq
+# Package to install (you can force certain version here)
+rabbitmq_pkg: rabbitmq-server
 
-# Plugins
-rabbitmq_plugins: rabbitmq_management
-rabbitmq_new_only: 'no'
-
-# Default ssl certs
-rabbitmq_cacert: cacert.pem
-rabbitmq_server_cert: servercert.pem
-rabbitmq_server_key: serverkey.pem
-rabbitmq_ssl: true
-
-# rabbitmq TCP configuration
-rabbitmq_conf_tcp_listeners_address: 0.0.0.0
-rabbitmq_conf_tcp_listeners_port: 5671
-# Disables SSLv3, see https://www.rabbitmq.com/ssl.html#enabling-ssl
-rabbitmq_conf_allow_poodle_attack: "false"
-
-# Guest user exists by default
-remove_guest_user: false
-
-# VHOST
-rabbitmq_vhost_definitions: []
-# example
-#- name: '/sensu'
-rabbitmq_users_definitions: []
-# example
-# - user: foo
-# password: bar
-# vhost: '/'
-# tags:
-# - one
-# - two
-# configure_priv: '.*'
-# read_priv: '.*'
-# write_priv: '.*'
-# force: yes
-
-# rabbitmq path
-rabbitmq_conf_path: /etc/rabbitmq
-
-# Generate self signed cert
-rabbitmq_ssl_self_signed_cert: false
-
-# rabbitmq SSL configuration
-rabbitmq_ssl_path: "{{ rabbitmq_conf_path }}/ssl"
-rabbitmq_conf_ssl_listeners_address: '0.0.0.0'
-rabbitmq_conf_ssl_listeners_port: 5671
-rabbitmq_conf_ssl_options_cacertfile: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_cacert }}"
-rabbitmq_conf_ssl_options_servercert: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_cert }}" 
-rabbitmq_conf_ssl_options_keyfile: "{{ rabbitmq_ssl_path }}/{{ rabbitmq_server_key }}"
-rabbitmq_conf_ssl_options_fail_if_no_peer_cert: "true"
+# Default RabbitMQ config
+rabbitmq_config:
+  - rabbit:
+    - tcp_listeners:
+      - '"127.0.0.1"': 5671
