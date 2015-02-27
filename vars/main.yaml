@@ -1,8 +1,0 @@
----
-
-# YUM repo
-yumrepo_repos:
-  rabbitmq-server:
-    name: rabbitmq-server
-    baseurl: "{{ rabbitmq_yum_repo_url }}"
-    gpgcheck: 0

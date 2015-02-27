@@ -136,7 +136,7 @@ rabbitmq_parameters: []
 Dependencies
 ------------
 
-* [`yumrepo`](https://github.com/picotrading/ansible-yumrepo) role
+* EPEL repo (see [`yumrepo`](https://github.com/picotrading/ansible-yumrepo) role)
 * [Jinja2 Encoder Macros](https://github.com/picotrading/jinja2-encoder-macros)
 
 

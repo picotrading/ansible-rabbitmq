@@ -1,8 +1,5 @@
 ---
 
-# YUM repo URL
-rabbitmq_yum_repo_url: http://www.rabbitmq.com/releases/rabbitmq-server/current/
-
 # Package to install (you can force certain version here)
 rabbitmq_pkg: rabbitmq-server
 
