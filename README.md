@@ -19,6 +19,7 @@ Example
 ```
 ---
 
+# Example of default installation
 - hosts: myhost1
   roles:
     - rabbitmq
@@ -70,6 +71,65 @@ rabbitmq_config:
   - rabbit:
     - tcp_listeners:
       - '"127.0.0.1'": 5671
+
+# Default RabbitMQ vhosts
+rabbitmq_vhosts: []
+# Example (see http://docs.ansible.com/rabbitmq_vhost_module.html):
+# rabbitmq_vhosts:
+#   - name: /myvhost
+#     node: rabbit
+#     state: present
+#     tracing: no
+
+# Default RabbitMQ users
+rabbitmq_users: []
+# Example (see http://docs.ansible.com/rabbitmq_user_module.html):
+# - user: foo
+#   password: bar
+#   vhost: /myvhost
+#   tags:
+#     - one
+#     - two
+#   configure_priv: ^$
+#   read_priv: ^$
+#   write_priv: ^$
+#   node: rabbit
+#   state: present
+#   force: yes
+
+# Default RabbitMQ policies
+rabbitmq_policies: []
+# Example (see http://docs.ansible.com/rabbitmq_policy_module.html):
+# rabbitmq_policies:
+#   - name: HA
+#     node: rabbit
+#     pattern: .*
+#     priority: 1
+#     state: present
+#     tags:
+#       ha-mode: all
+#     vhost: /myvhost
+
+# Default RabbitMQ plugins
+rabbitmq_plugins: []
+# Example (see http://docs.ansible.com/rabbitmq_plugin_module.html):
+# rabbitmq_plugins:
+#   - names:
+#     - rabbitmq_management
+#     new_only: no
+#     prefix: xyz
+#     state: present
+
+# Default RabbitMQ parameters
+rabbitmq_parameters: []
+# Example (http://docs.ansible.com/rabbitmq_parameter_module.html):
+# rabbitmq_parameters:
+#   - component: federation
+#     name: local-username
+#     value: '"guest"'
+#     node: rabbit
+#     vhost: /
+#     state: present
 ```
 
 

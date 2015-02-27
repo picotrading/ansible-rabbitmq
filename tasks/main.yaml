@@ -21,3 +21,54 @@
     name: rabbitmq-server
     state: started
     enabled: true
+
+- name: Manage RabbitMQ vhosts
+  rabbitmq_vhost:
+    name: "{{ item.name }}"
+    node: "{{ item.node | default('rabbit') }}"
+    state: "{{ item.state | default('present') }}"
+    tracing: "{{ item.tracing | default('no') }}"
+  with_items: rabbitmq_vhosts
+
+- name: Manage RabbitMQ users
+  rabbitmq_user:
+    user: "{{ item.user }}"
+    password: "{{ item.user | default('') }}"
+    vhost: "{{ item.vhost | default('/') }}"
+    tags: "{{ item.tags | join(',') | default('') }}"
+    configure_priv: "{{ item.configure_priv | default('^$') }}"
+    read_priv: "{{ item.read_priv | default('^$') }}"
+    write_priv: "{{ item.write_priv | default('^$') }}"
+    node: "{{ item.node | default('rabbit') }}"
+    state: "{{ item.state | default('present') }}"
+    force: "{{ item.force | default('no') }}"
+  with_items: rabbitmq_users
+
+- name: Manage RabbitMQ policies
+  rabbitmq_policy:
+    name: "{{ item.name }}"
+    node: "{{ item.node | default('rabbit') }}"
+    pattern: "{{ item.pattern | default('^$') }}"
+    priority: "{{ item.priority | default(1) }}"
+    state: "{{ item.tags | default('present') }}"
+    tags: "{{ item.tags | default('') }}"
+    vhost: "{{ item.vhost | default('/') }}"
+  with_items: rabbitmq_policies
+
+- name: Manage RabbitMQ plugins
+  rabbitmq_plugin:
+    names: "{{ item.names | join(',') }}"
+    new_only: "{{ item.new_only | join('no') }}"
+    prefix: "{{ item.prefix | join('') }}"
+    state: "{{ item.state | join('present') }}"
+  with_items: rabbitmq_plugins
+
+- name: Manage RabbitMQ parameters
+  rabbitmq_parameter:
+    name: "{{ item.name }}"
+    component: "{{ item.component }}"
+    value: "{{ item.value | default('') }}"
+    node: "{{ item.node | default('rabbit') }}"
+    vhost: "{{ item.vhost | default('/') }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: rabbitmq_parameters
