@@ -58,9 +58,9 @@
 - name: Manage RabbitMQ plugins
   rabbitmq_plugin:
     names: "{{ item.names | join(',') }}"
-    new_only: "{{ item.new_only | join('no') }}"
-    prefix: "{{ item.prefix | join('') }}"
-    state: "{{ item.state | join('present') }}"
+    new_only: "{{ item.new_only | default('no') }}"
+    prefix: "{{ item.prefix | default('') }}"
+    state: "{{ item.state | default('enabled') }}"
   with_items: rabbitmq_plugins
 
 - name: Manage RabbitMQ parameters

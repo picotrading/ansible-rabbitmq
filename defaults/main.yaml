@@ -55,7 +55,7 @@ rabbitmq_plugins: []
 #     - rabbitmq_management
 #     new_only: no
 #     prefix: xyz
-#     state: present
+#     state: enabled
 
 # Default RabbitMQ parameters
 rabbitmq_parameters: []
