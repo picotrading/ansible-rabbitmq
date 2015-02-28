@@ -22,6 +22,12 @@
     state: started
     enabled: true
 
+- name: Create sbin symlink to find executables
+  file:
+    src: /usr/lib/rabbitmq/bin
+    dest: /usr/lib/rabbitmq/sbin
+    state: link
+
 - name: Manage RabbitMQ vhosts
   rabbitmq_vhost:
     name: "{{ item.name }}"
