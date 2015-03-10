@@ -6,4 +6,4 @@
 
 {% from "templates/encoder/macros/erlang_encode_macro.j2" import erlang_encode with context -%}
 
-{{ erlang_encode(rabbitmq_config, convert_nums=true) }}
+{{ erlang_encode(rabbitmq_config, convert_bools=true, convert_nums=true) }}
