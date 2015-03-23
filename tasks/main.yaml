@@ -9,12 +9,19 @@
 - name: Install rabbitmq-server
   yum:
     name: "{{ rabbitmq_pkg }}"
+  notify:
+    - Restart rabbitmq-server
+  tags:
+    - rabbitmq_pkg
 
 - name: Setup RabbitMQ config
   template:
     src: rabbitmq.conf.j2
     dest: /etc/rabbitmq/rabbitmq.config
-  notify: Restart rabbitmq-server
+  notify:
+    - Restart rabbitmq-server
+  tags:
+    - rabbitmq_config
 
 - name: Make sure rabbitmq-server is enabled and running
   service:
@@ -68,7 +75,8 @@
     prefix: "{{ item.prefix | default('') }}"
     state: "{{ item.state | default('enabled') }}"
   with_items: rabbitmq_plugins
-  notify: Restart rabbitmq-server
+  notify:
+    - Restart rabbitmq-server
 
 - name: Manage RabbitMQ parameters
   rabbitmq_parameter:
