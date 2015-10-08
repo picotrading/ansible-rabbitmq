@@ -48,7 +48,7 @@
     user: "{{ item.user }}"
     password: "{{ item.user | default('') }}"
     vhost: "{{ item.vhost | default('/') }}"
-    tags: "{{ item.tags | join(',') | default('') }}"
+    tags: "{{ item.tags | default([]) | join(',') }}"
     configure_priv: "{{ item.configure_priv | default('^$') }}"
     read_priv: "{{ item.read_priv | default('^$') }}"
     write_priv: "{{ item.write_priv | default('^$') }}"
