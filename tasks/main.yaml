@@ -62,7 +62,7 @@
     name: "{{ item.name }}"
     node: "{{ item.node | default('rabbit') }}"
     pattern: "{{ item.pattern | default('^$') }}"
-    priority: "{{ item.priority | default(1) }}"
+    priority: "{{ item.priority | default(0) }}"
     state: "{{ item.state | default('present') }}"
     tags: "{{ item.tags | default('') }}"
     vhost: "{{ item.vhost | default('/') }}"
