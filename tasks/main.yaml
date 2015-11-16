@@ -46,7 +46,7 @@
 - name: Manage RabbitMQ users
   rabbitmq_user:
     user: "{{ item.user }}"
-    password: "{{ item.user | default('') }}"
+    password: "{{ item.password | default('') }}"
     vhost: "{{ item.vhost | default('/') }}"
     tags: "{{ item.tags | default([]) | join(',') }}"
     configure_priv: "{{ item.configure_priv | default('^$') }}"
